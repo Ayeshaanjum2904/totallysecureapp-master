@@ -3,7 +3,9 @@ package org.t246osslab.easybuggy4sb.controller;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -35,9 +37,18 @@ public class CxController {
     // curl localhost:8080/legacy/runCommand/whoami
     @PostMapping("legacy/runCommand/{cmd}")
     public String runCommand(@PathVariable String cmd) throws IOException {
-        byte[] buf = new byte[1024];
-        int len = Runtime.getRuntime().exec(cmd).getInputStream().read(buf);
-        return new String(buf, 0, len);
+        if (!cmd.matches("^[a-zA-Z0-9._-]+$")) {
+            throw new IllegalArgumentException("Invalid command");
+        }
+        Process process = Runtime.getRuntime().exec(cmd);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+            return output.toString().trim();
+        }
     }
 
     @GetMapping("legacy/add")
