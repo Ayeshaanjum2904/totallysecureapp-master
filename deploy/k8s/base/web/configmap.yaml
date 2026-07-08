@@ -10,8 +10,8 @@ data:
   PYTHON_SERVICE: crapi-workshop:8000
   DB_NAME: crapi
   DB_USER: admin
-  DB_PASSWORD: crapisecretpassword
+  DB_PASSWORD: ${DB_PASSWORD}
   DB_HOST: postgresdb
   DB_PORT: "5432"
-  JWT_SECRET: crapi
-  SECRET_KEY: crapi
+  JWT_SECRET: ${JWT_SECRET}
+  SECRET_KEY: ${SECRET_KEY}
