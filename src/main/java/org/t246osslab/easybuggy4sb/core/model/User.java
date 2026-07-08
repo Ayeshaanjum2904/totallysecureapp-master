@@ -20,7 +20,7 @@ public class User implements Serializable {
     private String name = null;
     @Attribute(name = "userPassword")
     private String password = null;
-    private String secret = null;
+    private String secret = System.getenv("USER_SECRET");
     private String phone = null;
     private String mail = null;
     private int loginFailedCount = 0;
@@ -29,7 +29,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User dn=" + dn + " [userId=" + userId + ", name=" + name + ", password=" + password + ", secret="
-                + secret + ", phone=" + phone + ", mail=" + mail + ", loginFailedCount=" + loginFailedCount
+                + "[PROTECTED]" + ", phone=" + phone + ", mail=" + mail + ", loginFailedCount=" + loginFailedCount
                 + ", lastLoginFailedTime=" + lastLoginFailedTime + "]";
     }
 
