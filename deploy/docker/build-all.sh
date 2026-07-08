@@ -14,13 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 set -x
 set -e
 cd "$(dirname $0)"
-scripts=$(find ../../services/ -name 'build-image*')
+
+scripts=$(find ../../services/ -name 'build-image*' || { echo "Error: Failed to find scripts."; exit 1; })
+
 for script in ${scripts}
 do
     echo "Executing $script"
-    bash -x "$script"
+    bash -x "$script" || { echo "Error: Failed to execute $script."; exit 1; }
 done
