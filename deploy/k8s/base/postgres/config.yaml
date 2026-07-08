@@ -6,6 +6,5 @@ metadata:
     app: postgresdb
 data:
   POSTGRES_USER: admin
-  POSTGRES_PASSWORD: crapisecretpassword
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   POSTGRES_DB: crapi
- 
