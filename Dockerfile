@@ -17,4 +17,7 @@ EXPOSE 22
 FROM python:3-slim-buster
 WORKDIR /app
 COPY hello.py /app
-CMD [“python3”, “hello.py”]
+RUN useradd -r appuser && chown -R appuser:appuser /app
+USER appuser
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD python3 -c 'import os; os.exit(0) if os.path.exists("/app/hello.py") else os.exit(1)'
+CMD ["python3", "hello.py"]
