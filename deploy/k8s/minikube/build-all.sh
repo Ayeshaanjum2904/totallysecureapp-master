@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 set -x
 set -e
 cd "$(dirname $0)"
-scripts=$(find ../../../services/ -name 'build-image*')
+scripts=$(find ../../../services/ -name 'build-image*' -print0 | xargs -0 -I{} echo {})
 for script in ${scripts}
 do
     echo "Executing $script"
-    bash -x "$script"
+    bash -x -- "$script"
 done
 
 if [ -z "${DOCKER_REGISTRY}" ]; then 
@@ -31,5 +30,11 @@ fi
 export DOCKER_REGISTRY
 
 # Deploy to local repository
-docker images | grep crapi | grep -v '/' | awk '{print $1}' | xargs -L1 -I{} docker tag {} ${DOCKER_REGISTRY}/{}:v1
-docker images | grep crapi |  grep "${DOCKER_REGISTRY}/" | grep v1 | awk '{print $1":"$2}' | xargs -L1 docker push
+docker images | grep crapi | grep -v '/' | awk '{print $1}' | while read -r image; do
+    sanitized_image=$(printf '%q' "$image")
+    docker tag "$sanitized_image" "${DOCKER_REGISTRY}/$sanitized_image:v1"
+done
+docker images | grep crapi | grep "${DOCKER_REGISTRY}/" | grep v1 | awk '{print $1":"$2}' | while read -r image_tag; do
+    sanitized_image_tag=$(printf '%q' "$image_tag")
+    docker push "$sanitized_image_tag"
+done

@@ -22,26 +22,26 @@ services:
     #ports:
     #  - "127.0.0.1:8080:8080"
     environment:
-      - DB_NAME=crapi
-      - DB_USER=admin
-      - DB_PASSWORD=crapisecretpassword
-      - DB_HOST=postgresdb
-      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
       - BLOCK_SHELL_INJECTION=false
-      - JWT_SECRET=crapi
-      - MAILHOG_HOST=mailhog
-      - MAILHOG_PORT=1025
-      - MAILHOG_DOMAIN=example.com
-      - SMTP_HOST=smtp.example.com
-      - SMTP_PORT=587
-      - SMTP_EMAIL=user@example.com
-      - SMTP_PASS=xxxxxxxxxxxxxx
-      - SMTP_FROM=no-reply@example.com
-      - SMTP_AUTH=true
-      - SMTP_STARTTLS=true
-      - WAIT_HOSTS=postgresdb:5432,mongodb:27017
-      - WAIT_HOSTS_TIMEOUT=120
-      - WAIT_SLEEP_INTERVAL=5
+      - JWT_SECRET=${JWT_SECRET}
+      - MAILHOG_HOST=${MAILHOG_HOST}
+      - MAILHOG_PORT=${MAILHOG_PORT}
+      - MAILHOG_DOMAIN=${MAILHOG_DOMAIN}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_EMAIL=${SMTP_EMAIL}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM}
+      - SMTP_AUTH=${SMTP_AUTH}
+      - SMTP_STARTTLS=${SMTP_STARTTLS}
+      - WAIT_HOSTS=${WAIT_HOSTS}
+      - WAIT_HOSTS_TIMEOUT=${WAIT_HOSTS_TIMEOUT}
+      - WAIT_SLEEP_INTERVAL=${WAIT_SLEEP_INTERVAL}
     depends_on:
       - postgresdb
       - mongodb
@@ -62,21 +62,21 @@ services:
     #ports:
     #  - "127.0.0.1:8087:8087"
     environment:
-      - DB_NAME=crapi
-      - DB_USER=admin
-      - DB_PASSWORD=crapisecretpassword
-      - DB_HOST=postgresdb
-      - DB_PORT=5432
-      - MONGO_DB_HOST=mongodb
-      - MONGO_DB_PORT=27017
-      - MONGO_DB_USER=admin
-      - MONGO_DB_PASSWORD=crapisecretpassword
-      - MONGO_DB_NAME=crapi
-      - JWT_SECRET=crapi
-      - WAIT_HOSTS=postgresdb:5432,mongodb:27017,crapi-identity:8080
-      - WAIT_HOSTS_TIMEOUT=120
-      - WAIT_SLEEP_INTERVAL=5
-      - WAIT_AFTER_HOSTS=10
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - MONGO_DB_HOST=${MONGO_DB_HOST}
+      - MONGO_DB_PORT=${MONGO_DB_PORT}
+      - MONGO_DB_USER=${MONGO_DB_USER}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - WAIT_HOSTS=${WAIT_HOSTS}
+      - WAIT_HOSTS_TIMEOUT=${WAIT_HOSTS_TIMEOUT}
+      - WAIT_SLEEP_INTERVAL=${WAIT_SLEEP_INTERVAL}
+      - WAIT_AFTER_HOSTS=${WAIT_AFTER_HOSTS}
     depends_on:
       - postgresdb
       - mongodb
@@ -98,22 +98,22 @@ services:
     #ports:
     #  - "127.0.0.1:8000:8000"
     environment:
-      - DB_NAME=crapi
-      - DB_USER=admin
-      - DB_PASSWORD=crapisecretpassword
-      - DB_HOST=postgresdb
-      - DB_PORT=5432
-      - MONGO_DB_HOST=mongodb
-      - MONGO_DB_PORT=27017
-      - MONGO_DB_USER=admin
-      - MONGO_DB_PASSWORD=crapisecretpassword
-      - MONGO_DB_NAME=crapi
-      - JWT_SECRET=crapi
-      - SECRET_KEY=crapi
-      - WAIT_HOSTS=crapi-identity:8080,crapi-community:8087,mailhog:1025
-      - WAIT_HOSTS_TIMEOUT=120
-      - WAIT_SLEEP_INTERVAL=5
-      - WAIT_AFTER_HOSTS=10
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - MONGO_DB_HOST=${MONGO_DB_HOST}
+      - MONGO_DB_PORT=${MONGO_DB_PORT}
+      - MONGO_DB_USER=${MONGO_DB_USER}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
+      - WAIT_HOSTS=${WAIT_HOSTS}
+      - WAIT_HOSTS_TIMEOUT=${WAIT_HOSTS_TIMEOUT}
+      - WAIT_SLEEP_INTERVAL=${WAIT_SLEEP_INTERVAL}
+      - WAIT_AFTER_HOSTS=${WAIT_AFTER_HOSTS}
     depends_on:
       - postgresdb
       - mongodb
@@ -136,12 +136,12 @@ services:
     ports:
       - "127.0.0.1:8888:80"
     environment:
-      - GO_SERVICE=crapi-community:8087
-      - JAVA_SERVICE=crapi-identity:8080
-      - PYTHON_SERVICE=crapi-workshop:8000
-      - WAIT_HOSTS=crapi-community:8087,crapi-identity:8080,crapi-workshop:8000,mailhog:1025
-      - WAIT_HOSTS_TIMEOUT=120
-      - WAIT_SLEEP_INTERVAL=5
+      - GO_SERVICE=${GO_SERVICE}
+      - JAVA_SERVICE=${JAVA_SERVICE}
+      - PYTHON_SERVICE=${PYTHON_SERVICE}
+      - WAIT_HOSTS=${WAIT_HOSTS}
+      - WAIT_HOSTS_TIMEOUT=${WAIT_HOSTS_TIMEOUT}
+      - WAIT_SLEEP_INTERVAL=${WAIT_SLEEP_INTERVAL}
     depends_on:
       - crapi-community
       - crapi-identity
@@ -161,9 +161,9 @@ services:
     container_name: postgresdb
     image: 'postgres'
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: crapisecretpassword
-      POSTGRES_DB: crapi
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     #ports:
     #  - "127.0.0.1:5432:5432"
     volumes:
@@ -178,8 +178,8 @@ services:
     container_name: mongodb
     image: 'mongo'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: crapisecretpassword
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     #ports:
     #  - "127.0.0.1:27017:27017"
     volumes:
@@ -191,11 +191,11 @@ services:
           memory: 128M
 
   mailhog:
-    user: root
+    user: mailhog
     container_name: mailhog
     image: mailhog/mailhog
     environment:
-      MH_MONGO_URI: admin:crapisecretpassword@mongodb:27017
+      MH_MONGO_URI: ${MH_MONGO_URI}
       MH_STORAGE: mongodb
     ports: 
     #  - "127.0.0.1:1025:1025" # smtp server
